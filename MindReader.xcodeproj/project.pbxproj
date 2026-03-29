@@ -13,6 +13,7 @@
 		1C5589255EE38B6BD63A1D8B /* FilenameFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B38B038D139890FD82A7513 /* FilenameFormatterTests.swift */; };
 		24F661108C9A9F154959C190 /* FileIngestionPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487619809B46FE89DD03CF70 /* FileIngestionPipelineTests.swift */; };
 		43B17BF56064CB59D4824A5E /* MindReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD72A01B0A2490E4C0C8D8B /* MindReaderApp.swift */; };
+		4B259C0019403AE0B1738B2F /* OllamaAIModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29D4E7171CE76FE58219F /* OllamaAIModelService.swift */; };
 		51A53C12735D391AF2B27081 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D07F207368A9BF7AA7C2A4 /* MenuBarView.swift */; };
 		58BE178AAD2C34E801E744DC /* FilenameFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58D22EB893789178F505A29 /* FilenameFormatter.swift */; };
 		696B6E878CF498EDEFC0E3D4 /* RenameMetadataExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3055A56B89CDD19520A6A6 /* RenameMetadataExtractor.swift */; };
@@ -26,7 +27,9 @@
 		AABF7D23E4ADD2CF67D5D796 /* AIModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D942354AC38136B88EA16 /* AIModelStore.swift */; };
 		AD16E8E815AAE31F499BF02F /* RenameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C868DB3C5CB1E4E51061D /* RenameEngine.swift */; };
 		BC1910623FC41D4A094BF3D3 /* RenameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA23580BD95E7B710165C2EF /* RenameEngineTests.swift */; };
+		CA66242C381E143CD4810AF4 /* OllamaServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CF173A6EAF80F72BF7A79C /* OllamaServiceTests.swift */; };
 		E80B30A2397E633CD2BF68F8 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F871AE7D7F8D787ED25A61 /* PreferencesWindowController.swift */; };
+		EEC574DCDCA5DBA564A110DC /* OllamaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF8A6D351022EBF4AB3A952 /* OllamaService.swift */; };
 		F35CE5D63073F266C04E06B2 /* RenameExecutionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AB75B1F17EB7826F44DAC /* RenameExecutionEngine.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +45,10 @@
 
 /* Begin PBXFileReference section */
 		0A6AA91373167455C3336D4E /* ShortcutNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutNames.swift; sourceTree = "<group>"; };
+		0FF8A6D351022EBF4AB3A952 /* OllamaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaService.swift; sourceTree = "<group>"; };
 		133C868DB3C5CB1E4E51061D /* RenameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameEngine.swift; sourceTree = "<group>"; };
+		16CF173A6EAF80F72BF7A79C /* OllamaServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaServiceTests.swift; sourceTree = "<group>"; };
+		1DC29D4E7171CE76FE58219F /* OllamaAIModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaAIModelService.swift; sourceTree = "<group>"; };
 		2F9A84A69571E17E4F26BABF /* AIModelStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModelStoreTests.swift; sourceTree = "<group>"; };
 		35F871AE7D7F8D787ED25A61 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		3B38B038D139890FD82A7513 /* FilenameFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilenameFormatterTests.swift; sourceTree = "<group>"; };
@@ -86,6 +92,7 @@
 				487619809B46FE89DD03CF70 /* FileIngestionPipelineTests.swift */,
 				3B38B038D139890FD82A7513 /* FilenameFormatterTests.swift */,
 				41E5806E24A2B7649A20AFB4 /* MenuBarViewModelTests.swift */,
+				16CF173A6EAF80F72BF7A79C /* OllamaServiceTests.swift */,
 				CA23580BD95E7B710165C2EF /* RenameEngineTests.swift */,
 				8431A8DDAEDD683E83177151 /* RenameExecutionEngineTests.swift */,
 			);
@@ -118,6 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				A35D942354AC38136B88EA16 /* AIModelStore.swift */,
+				1DC29D4E7171CE76FE58219F /* OllamaAIModelService.swift */,
+				0FF8A6D351022EBF4AB3A952 /* OllamaService.swift */,
 			);
 			path = AI;
 			sourceTree = "<group>";
@@ -280,6 +289,7 @@
 				24F661108C9A9F154959C190 /* FileIngestionPipelineTests.swift in Sources */,
 				1C5589255EE38B6BD63A1D8B /* FilenameFormatterTests.swift in Sources */,
 				8A1E0A5CDAE86B04959925AF /* MenuBarViewModelTests.swift in Sources */,
+				CA66242C381E143CD4810AF4 /* OllamaServiceTests.swift in Sources */,
 				BC1910623FC41D4A094BF3D3 /* RenameEngineTests.swift in Sources */,
 				6D7E886E251313CFE0EAB82B /* RenameExecutionEngineTests.swift in Sources */,
 			);
@@ -297,6 +307,8 @@
 				51A53C12735D391AF2B27081 /* MenuBarView.swift in Sources */,
 				9671FA6ED8BB8B35CE0BD286 /* MenuBarViewModel.swift in Sources */,
 				43B17BF56064CB59D4824A5E /* MindReaderApp.swift in Sources */,
+				4B259C0019403AE0B1738B2F /* OllamaAIModelService.swift in Sources */,
+				EEC574DCDCA5DBA564A110DC /* OllamaService.swift in Sources */,
 				81973CE2A7E3A3CA9404597E /* PreferencesView.swift in Sources */,
 				E80B30A2397E633CD2BF68F8 /* PreferencesWindowController.swift in Sources */,
 				AD16E8E815AAE31F499BF02F /* RenameEngine.swift in Sources */,

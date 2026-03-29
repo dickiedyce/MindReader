@@ -48,11 +48,23 @@ struct NoopAIModelService: AIModelServing {
 final class AIModelStore: ObservableObject {
     @Published private(set) var lifecycleState: AIModelLifecycleState = .idle
     @Published var selectedModel: CuratedModel = ModelCatalog.all[0]
+    @Published private(set) var ollamaAvailable: Bool = false
 
     private let service: AIModelServing
 
-    init(service: AIModelServing = NoopAIModelService()) {
+    init(service: AIModelServing = OllamaAIModelService()) {
         self.service = service
+    }
+
+    /// Call once at app startup. Detects whether Ollama is running and, if so,
+    /// preloads the selected model automatically.
+    func detectAndPreload() async {
+        if let ollamaService = service as? OllamaAIModelService {
+            ollamaAvailable = await ollamaService.isReady(model: selectedModel)
+        }
+        if ollamaAvailable {
+            await load()
+        }
     }
 
     func load() async {
@@ -60,6 +72,8 @@ final class AIModelStore: ObservableObject {
         do {
             try await service.load(model: selectedModel)
             lifecycleState = .ready
+        } catch OllamaError.unavailable {
+            lifecycleState = .error("Ollama not running — start Ollama and try again")
         } catch {
             lifecycleState = .error(error.localizedDescription)
         }

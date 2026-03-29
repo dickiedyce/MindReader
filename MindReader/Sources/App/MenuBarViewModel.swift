@@ -75,6 +75,10 @@ final class MenuBarViewModel: ObservableObject {
         PreferencesWindowController.shared.show(appSettingsStore: appSettingsStore, aiModelStore: aiModelStore)
     }
 
+    func preloadAIModel() async {
+        await aiModelStore.detectAndPreload()
+    }
+
     func applyRenames() async {
         guard canApplyRenames else { return }
         isProcessing = true

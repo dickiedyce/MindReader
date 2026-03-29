@@ -17,6 +17,7 @@ struct MindReaderApp: App {
             systemImage: viewModel.isProcessing ? "waveform.circle.fill" : "waveform.circle"
         ) {
             MenuBarView(viewModel: viewModel)
+                .task { await viewModel.preloadAIModel() }
         }
         .menuBarExtraStyle(.window)
     }

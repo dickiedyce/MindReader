@@ -24,6 +24,18 @@ struct MenuBarView: View {
             }
             .disabled(!viewModel.canStopProcessing)
 
+            if viewModel.canApplyRenames {
+                Button("Apply \(viewModel.lastProposals.count) Rename(s)") {
+                    Task { await viewModel.applyRenames() }
+                }
+            }
+
+            if viewModel.canRevertRenames {
+                Button("Revert \(viewModel.lastRecords.count) Rename(s)") {
+                    Task { await viewModel.revertRenames() }
+                }
+            }
+
             Divider()
 
             Button("Preferences...") {

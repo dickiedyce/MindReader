@@ -56,7 +56,7 @@ final class FileIngestionPipeline: FileIngesting {
 
     init(
         documentExtractor: DocumentTextExtracting = PlainTextDocumentExtractor(),
-        ocrExtractor: OCRTextExtracting = NoopOCRExtractor(),
+        ocrExtractor: OCRTextExtracting = VisionOCRExtractor(),
         metadataProvider: FileMetadataProviding = FileAttributesMetadataProvider()
     ) {
         self.documentExtractor = documentExtractor

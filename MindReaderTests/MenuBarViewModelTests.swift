@@ -152,7 +152,7 @@ final class MenuBarViewModelTests: XCTestCase {
     func testHeuristicMetadataUsedWhenModelIsNotReady() async {
         let selected = [URL(fileURLWithPath: "/tmp/scan_1.pdf")]
         let aiStore = AIModelStore(service: StubAIModelService(shouldFail: true))
-        // Don't call load — lifecycleState stays .idle
+        // Don't call load - lifecycleState stays .idle
 
         let viewModel = MenuBarViewModel(
             appSettingsStore: AppSettingsStore(defaults: UserDefaults(suiteName: #function)!, storageKey: #function),
@@ -205,7 +205,7 @@ private struct StubRenameProposer: RenameProposing {
     func proposeRename(for sourceURL: URL, metadata: RenameMetadata) -> RenameProposal {
         RenameProposal(
             originalURL: sourceURL,
-            proposedFilename: "2025-12-04 — \(metadata.entity) — \(metadata.description).pdf"
+            proposedFilename: "2025-12-04 - \(metadata.entity) - \(metadata.description).pdf"
         )
     }
 }

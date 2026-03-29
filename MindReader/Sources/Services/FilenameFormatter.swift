@@ -31,7 +31,7 @@ struct FilenameFormatter {
         let descriptionPart = sanitizeComponent(context.description)
         let fileExtension = sanitizeExtension(context.originalExtension)
 
-        return "\(datePart) — \(entityPart) — \(descriptionPart).\(fileExtension)"
+        return "\(datePart) - \(entityPart) - \(descriptionPart).\(fileExtension)"
     }
 
     private func formattedDate(date: Date?, precision: DatePrecision) -> String {

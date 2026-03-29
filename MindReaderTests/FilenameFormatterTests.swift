@@ -16,7 +16,7 @@ final class FilenameFormatterTests: XCTestCase {
 
         let output = formatter.format(context: context)
 
-        XCTAssertEqual(output, "2025-12-04 — Acme Co — Invoice #1843.pdf")
+        XCTAssertEqual(output, "2025-12-04 - Acme Co - Invoice #1843.pdf")
     }
 
     func testFormatsWithYearPrecisionDate() {
@@ -33,7 +33,7 @@ final class FilenameFormatterTests: XCTestCase {
 
         let output = formatter.format(context: context)
 
-        XCTAssertEqual(output, "2017 — Vaswani et al — Attention Is All You Need.pdf")
+        XCTAssertEqual(output, "2017 - Vaswani et al - Attention Is All You Need.pdf")
     }
 
     func testSanitizesInvalidPathCharacters() {
@@ -50,6 +50,6 @@ final class FilenameFormatterTests: XCTestCase {
 
         let output = formatter.format(context: context)
 
-        XCTAssertEqual(output, "2025-12-04 — Acme-Corp — Invoice #1843.pdf")
+        XCTAssertEqual(output, "2025-12-04 - Acme-Corp - Invoice #1843.pdf")
     }
 }

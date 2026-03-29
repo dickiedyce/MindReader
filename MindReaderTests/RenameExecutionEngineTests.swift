@@ -19,7 +19,7 @@ final class RenameExecutionEngineTests: XCTestCase {
     func testPreviewBuildsPlanWithoutMutatingDisk() throws {
         let source = try makeFile(named: "Scan_0042.pdf")
         let engine = RenameExecutionEngine()
-        let proposal = RenameProposal(originalURL: source, proposedFilename: "2025-12-04 — Acme Co — Invoice #1843.pdf")
+        let proposal = RenameProposal(originalURL: source, proposedFilename: "2025-12-04 - Acme Co - Invoice #1843.pdf")
 
         let plans = engine.preview(proposals: [proposal])
 
@@ -31,7 +31,7 @@ final class RenameExecutionEngineTests: XCTestCase {
     func testApplyRenamesFilesOnDisk() throws {
         let source = try makeFile(named: "Scan_0042.pdf")
         let engine = RenameExecutionEngine()
-        let proposal = RenameProposal(originalURL: source, proposedFilename: "2025-12-04 — Acme Co — Invoice #1843.pdf")
+        let proposal = RenameProposal(originalURL: source, proposedFilename: "2025-12-04 - Acme Co - Invoice #1843.pdf")
 
         let records = try engine.apply(plans: engine.preview(proposals: [proposal]))
 
@@ -43,7 +43,7 @@ final class RenameExecutionEngineTests: XCTestCase {
     func testRevertRestoresOriginalNames() throws {
         let source = try makeFile(named: "Scan_0042.pdf")
         let engine = RenameExecutionEngine()
-        let proposal = RenameProposal(originalURL: source, proposedFilename: "2025-12-04 — Acme Co — Invoice #1843.pdf")
+        let proposal = RenameProposal(originalURL: source, proposedFilename: "2025-12-04 - Acme Co - Invoice #1843.pdf")
 
         let records = try engine.apply(plans: engine.preview(proposals: [proposal]))
         try engine.revert(records: records)

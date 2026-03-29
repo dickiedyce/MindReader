@@ -17,6 +17,6 @@ final class RenameEngineTests: XCTestCase {
         let proposal = engine.proposeRename(for: sourceURL, metadata: metadata)
 
         XCTAssertEqual(proposal.originalURL, sourceURL)
-        XCTAssertEqual(proposal.proposedFilename, "2025-12-04 — Acme Co — Invoice #1843.pdf")
+        XCTAssertEqual(proposal.proposedFilename, "2025-12-04 - Acme Co - Invoice #1843.pdf")
     }
 }

@@ -4,13 +4,13 @@ import SwiftUI
 struct PreferencesView: View {
     enum Tab: String, CaseIterable, Hashable {
         case general
-        case mindReader
+        case aiModel
         case privacy
 
         var title: String {
             switch self {
             case .general: return "General"
-            case .mindReader: return "MindReader"
+            case .aiModel: return "AI Model"
             case .privacy: return "Privacy"
             }
         }
@@ -18,13 +18,14 @@ struct PreferencesView: View {
         var symbolName: String {
             switch self {
             case .general: return "gearshape"
-            case .mindReader: return "doc.text.magnifyingglass"
+            case .aiModel: return "brain"
             case .privacy: return "lock.shield"
             }
         }
     }
 
     @ObservedObject var appSettingsStore: AppSettingsStore
+    @ObservedObject var aiModelStore: AIModelStore
     @State private var selectedTab: Tab = .general
 
     var body: some View {
@@ -65,8 +66,8 @@ struct PreferencesView: View {
         switch selectedTab {
         case .general:
             generalTab
-        case .mindReader:
-            mindReaderTab
+        case .aiModel:
+            aiModelTab
         case .privacy:
             privacyTab
         }
@@ -107,13 +108,100 @@ struct PreferencesView: View {
         .formStyle(.grouped)
     }
 
-    private var mindReaderTab: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("MindReader Parsing Profile")
-                .font(.headline)
-            Text("This tab will host extraction templates, prompt presets, and rename rules.")
-                .foregroundStyle(.secondary)
+    private var aiModelTab: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            // Model Selection
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Model Selection")
+                    .font(.headline)
+                ForEach(ModelCatalog.all) { model in
+                    Button {
+                        aiModelStore.selectedModel = model
+                    } label: {
+                        HStack(spacing: 10) {
+                            Image(systemName: aiModelStore.selectedModel == model
+                                  ? "largecircle.fill.circle"
+                                  : "circle")
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(model.displayName)
+                                Text(model.ramHint)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+
+            Divider()
+
+            // Model Status
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Model Status")
+                    .font(.headline)
+                HStack {
+                    lifecycleStatusView
+                    Spacer()
+                    lifecycleActionButton
+                }
+            }
+
+            Divider()
+
+            // About
+            VStack(alignment: .leading, spacing: 4) {
+                Text("About")
+                    .font(.headline)
+                Text("All AI processing happens on-device. No file content is sent to external servers.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
             Spacer()
+        }
+    }
+
+    @ViewBuilder
+    private var lifecycleStatusView: some View {
+        switch aiModelStore.lifecycleState {
+        case .idle:
+            Text("No model loaded")
+                .foregroundStyle(.secondary)
+        case .downloading(let progress):
+            ProgressView(value: progress)
+                .frame(maxWidth: 200)
+        case .loading:
+            HStack(spacing: 6) {
+                ProgressView()
+                    .controlSize(.small)
+                Text("Loading...")
+                    .foregroundStyle(.secondary)
+            }
+        case .ready:
+            Label("Model ready", systemImage: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+        case .error(let message):
+            Label(message, systemImage: "exclamationmark.triangle.fill")
+                .foregroundStyle(.red)
+        }
+    }
+
+    @ViewBuilder
+    private var lifecycleActionButton: some View {
+        switch aiModelStore.lifecycleState {
+        case .idle, .error:
+            Button("Load Model") {
+                Task { await aiModelStore.load() }
+            }
+            .buttonStyle(.borderedProminent)
+        case .ready:
+            Button("Unload") {
+                Task { await aiModelStore.unload() }
+            }
+        case .loading, .downloading:
+            ProgressView()
+                .controlSize(.small)
         }
     }
 

@@ -14,6 +14,7 @@ final class MenuBarViewModel: ObservableObject {
     private let ingestionPipeline: FileIngesting
     private let renameProposer: RenameProposing
     private let executionEngine: RenameExecuting
+    private let aiModelStore: AIModelStore
     private var currentTask: Task<Void, Never>?
 
     init(
@@ -21,13 +22,15 @@ final class MenuBarViewModel: ObservableObject {
         selectionProvider: FinderSelectionProviding = FinderSelectionProvider(),
         ingestionPipeline: FileIngesting = FileIngestionPipeline(),
         renameProposer: RenameProposing = RenameEngine(),
-        executionEngine: RenameExecuting = RenameExecutionEngine()
+        executionEngine: RenameExecuting = RenameExecutionEngine(),
+        aiModelStore: AIModelStore? = nil
     ) {
         self.appSettingsStore = appSettingsStore
         self.selectionProvider = selectionProvider
         self.ingestionPipeline = ingestionPipeline
         self.renameProposer = renameProposer
         self.executionEngine = executionEngine
+        self.aiModelStore = aiModelStore ?? AIModelStore()
     }
 
     var primaryActionTitle: String {
@@ -69,7 +72,7 @@ final class MenuBarViewModel: ObservableObject {
     }
 
     func openPreferences() {
-        PreferencesWindowController.shared.show(appSettingsStore: appSettingsStore)
+        PreferencesWindowController.shared.show(appSettingsStore: appSettingsStore, aiModelStore: aiModelStore)
     }
 
     func applyRenames() async {

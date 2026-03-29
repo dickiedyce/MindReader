@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0248F4E019F77191DBA05017 /* FileIngestionPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FEE62D9EE7B769E2DBA8AF /* FileIngestionPipeline.swift */; };
 		0263F0EDABD0EDA00D3BC979 /* AppSettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D5529D6AE88F2FBE8DA8F5 /* AppSettingsStoreTests.swift */; };
+		132B08F9F9895FBEDA850882 /* AIModelStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A84A69571E17E4F26BABF /* AIModelStoreTests.swift */; };
 		1C5589255EE38B6BD63A1D8B /* FilenameFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B38B038D139890FD82A7513 /* FilenameFormatterTests.swift */; };
 		24F661108C9A9F154959C190 /* FileIngestionPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487619809B46FE89DD03CF70 /* FileIngestionPipelineTests.swift */; };
 		43B17BF56064CB59D4824A5E /* MindReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD72A01B0A2490E4C0C8D8B /* MindReaderApp.swift */; };
@@ -22,6 +23,7 @@
 		95789E31DE63FD598AA8C6C7 /* FinderSelectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D919B5CD94D70D698572C5 /* FinderSelectionProvider.swift */; };
 		9671FA6ED8BB8B35CE0BD286 /* MenuBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBC4C2E29856D2197AB584D /* MenuBarViewModel.swift */; };
 		9C32E8F80AEFA926EEACBB21 /* ShortcutNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6AA91373167455C3336D4E /* ShortcutNames.swift */; };
+		AABF7D23E4ADD2CF67D5D796 /* AIModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D942354AC38136B88EA16 /* AIModelStore.swift */; };
 		AD16E8E815AAE31F499BF02F /* RenameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C868DB3C5CB1E4E51061D /* RenameEngine.swift */; };
 		BC1910623FC41D4A094BF3D3 /* RenameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA23580BD95E7B710165C2EF /* RenameEngineTests.swift */; };
 		E80B30A2397E633CD2BF68F8 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F871AE7D7F8D787ED25A61 /* PreferencesWindowController.swift */; };
@@ -41,6 +43,7 @@
 /* Begin PBXFileReference section */
 		0A6AA91373167455C3336D4E /* ShortcutNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutNames.swift; sourceTree = "<group>"; };
 		133C868DB3C5CB1E4E51061D /* RenameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameEngine.swift; sourceTree = "<group>"; };
+		2F9A84A69571E17E4F26BABF /* AIModelStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModelStoreTests.swift; sourceTree = "<group>"; };
 		35F871AE7D7F8D787ED25A61 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		3B38B038D139890FD82A7513 /* FilenameFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilenameFormatterTests.swift; sourceTree = "<group>"; };
 		41E5806E24A2B7649A20AFB4 /* MenuBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarViewModelTests.swift; sourceTree = "<group>"; };
@@ -51,6 +54,7 @@
 		8431A8DDAEDD683E83177151 /* RenameExecutionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameExecutionEngineTests.swift; sourceTree = "<group>"; };
 		900738830A4E06AFD2584411 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		93FEE62D9EE7B769E2DBA8AF /* FileIngestionPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIngestionPipeline.swift; sourceTree = "<group>"; };
+		A35D942354AC38136B88EA16 /* AIModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModelStore.swift; sourceTree = "<group>"; };
 		B4D5529D6AE88F2FBE8DA8F5 /* AppSettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsStoreTests.swift; sourceTree = "<group>"; };
 		B9D919B5CD94D70D698572C5 /* FinderSelectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderSelectionProvider.swift; sourceTree = "<group>"; };
 		BB3055A56B89CDD19520A6A6 /* RenameMetadataExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameMetadataExtractor.swift; sourceTree = "<group>"; };
@@ -77,6 +81,7 @@
 		6C7CFCE0BEB41DBE0B715244 /* MindReaderTests */ = {
 			isa = PBXGroup;
 			children = (
+				2F9A84A69571E17E4F26BABF /* AIModelStoreTests.swift */,
 				B4D5529D6AE88F2FBE8DA8F5 /* AppSettingsStoreTests.swift */,
 				487619809B46FE89DD03CF70 /* FileIngestionPipelineTests.swift */,
 				3B38B038D139890FD82A7513 /* FilenameFormatterTests.swift */,
@@ -109,6 +114,14 @@
 			path = MindReader;
 			sourceTree = "<group>";
 		};
+		8E053016C0B8DC085AAC4D8E /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				A35D942354AC38136B88EA16 /* AIModelStore.swift */,
+			);
+			path = AI;
+			sourceTree = "<group>";
+		};
 		9CB4C8A315B68DB43D374092 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +146,7 @@
 		C723C3B86E21C8946DCCA815 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8E053016C0B8DC085AAC4D8E /* AI */,
 				B27AC9193B35B30E2345CADF /* App */,
 				49767B50555042C83061F592 /* Models */,
 				87EC76F4A990B900093443EB /* Services */,
@@ -261,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				132B08F9F9895FBEDA850882 /* AIModelStoreTests.swift in Sources */,
 				0263F0EDABD0EDA00D3BC979 /* AppSettingsStoreTests.swift in Sources */,
 				24F661108C9A9F154959C190 /* FileIngestionPipelineTests.swift in Sources */,
 				1C5589255EE38B6BD63A1D8B /* FilenameFormatterTests.swift in Sources */,
@@ -274,6 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AABF7D23E4ADD2CF67D5D796 /* AIModelStore.swift in Sources */,
 				8D5288EA6DD1783D941E606F /* AppSettings.swift in Sources */,
 				0248F4E019F77191DBA05017 /* FileIngestionPipeline.swift in Sources */,
 				58BE178AAD2C34E801E744DC /* FilenameFormatter.swift in Sources */,

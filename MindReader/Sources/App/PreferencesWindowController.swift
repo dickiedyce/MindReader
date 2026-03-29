@@ -13,9 +13,9 @@ final class PreferencesWindowController: NSWindowController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func show(appSettingsStore: AppSettingsStore) {
+    func show(appSettingsStore: AppSettingsStore, aiModelStore: AIModelStore) {
         if window == nil {
-            let rootView = PreferencesView(appSettingsStore: appSettingsStore)
+            let rootView = PreferencesView(appSettingsStore: appSettingsStore, aiModelStore: aiModelStore)
             let hostingController = NSHostingController(rootView: rootView)
 
             let preferencesWindow = NSWindow(contentViewController: hostingController)

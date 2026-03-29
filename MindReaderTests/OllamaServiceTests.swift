@@ -58,6 +58,41 @@ final class OllamaServiceTests: XCTestCase {
         let result = try await service.modelIsAvailableLocally(id: "llama3.2:latest")
         XCTAssertFalse(result)
     }
+
+    // MARK: - parsePullProgress
+
+    func testParsePullProgressExtractsRatio() {
+        let line = #"{"status":"pulling layer","digest":"sha256:abc","total":1024,"completed":512}"#
+        let progress = OllamaService.parsePullProgress(jsonLine: line)
+        XCTAssertEqual(progress, 0.5)
+    }
+
+    func testParsePullProgressReturnsNilForNonProgressLine() {
+        let line = #"{"status":"pulling manifest"}"#
+        let progress = OllamaService.parsePullProgress(jsonLine: line)
+        XCTAssertNil(progress)
+    }
+
+    func testParsePullProgressReturnsNilWhenTotalIsZero() {
+        let line = #"{"status":"pulling layer","total":0,"completed":0}"#
+        let progress = OllamaService.parsePullProgress(jsonLine: line)
+        XCTAssertNil(progress)
+    }
+
+    // MARK: - downloadModel
+
+    func testDownloadModelCallsProgressHandlerForLayerEvents() async throws {
+        let ndjson = """
+        {"status":"pulling manifest"}
+        {"status":"pulling layer","total":1024,"completed":512}
+        {"status":"pulling layer","total":1024,"completed":1024}
+        {"status":"success"}
+        """
+        let service = OllamaService(session: StubURLSession(responseBody: ndjson))
+        var received: [Double] = []
+        try await service.downloadModel(id: "llama3.2:latest") { received.append($0) }
+        XCTAssertEqual(received, [0.5, 1.0])
+    }
 }
 
 // MARK: - Stubs
@@ -79,5 +114,15 @@ private final class StubURLSession: URLSessionProtocol {
         let response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
         let data = responseBody?.data(using: .utf8) ?? Data()
         return (data, response)
+    }
+
+    func lines(for request: URLRequest) async throws -> AsyncThrowingStream<String, Error> {
+        if let error { return AsyncThrowingStream { $0.finish(throwing: error) } }
+        let body = responseBody ?? ""
+        let lines = body.components(separatedBy: "\n").filter { !$0.isEmpty }
+        return AsyncThrowingStream { continuation in
+            for line in lines { continuation.yield(line) }
+            continuation.finish()
+        }
     }
 }

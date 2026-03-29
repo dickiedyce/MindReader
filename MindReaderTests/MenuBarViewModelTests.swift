@@ -239,7 +239,7 @@ private struct StubAIMetadataExtractor: AIMetadataExtracting {
 private struct StubAIModelService: AIModelServing {
     let shouldFail: Bool
     init(shouldFail: Bool = false) { self.shouldFail = shouldFail }
-    func load(model: CuratedModel) async throws {
+    func load(model: CuratedModel, onProgress: (@Sendable (Double) -> Void)?) async throws {
         if shouldFail { throw StubError.failed }
     }
     func unload() async {}

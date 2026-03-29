@@ -30,15 +30,15 @@ enum AIModelLifecycleState: Equatable {
 
 // MARK: - AIModelServing
 
-protocol AIModelServing {
-    func load(model: CuratedModel) async throws
+protocol AIModelServing: Sendable {
+    func load(model: CuratedModel, onProgress: (@Sendable (Double) -> Void)?) async throws
     func unload() async
 }
 
 // MARK: - NoopAIModelService
 
 struct NoopAIModelService: AIModelServing {
-    func load(model: CuratedModel) async throws {}
+    func load(model: CuratedModel, onProgress: (@Sendable (Double) -> Void)?) async throws {}
     func unload() async {}
 }
 
@@ -70,7 +70,11 @@ final class AIModelStore: ObservableObject {
     func load() async {
         lifecycleState = .loading
         do {
-            try await service.load(model: selectedModel)
+            try await service.load(model: selectedModel) { [weak self] progress in
+                Task { @MainActor [weak self] in
+                    self?.lifecycleState = .downloading(progress: progress)
+                }
+            }
             lifecycleState = .ready
         } catch OllamaError.unavailable {
             lifecycleState = .error("Ollama not running — start Ollama and try again")

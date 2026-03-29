@@ -11,16 +11,18 @@ actor OllamaAIModelService: AIModelServing {
         self.ollama = ollama
     }
 
-    func load(model: CuratedModel) async throws {
+    func load(model: CuratedModel, onProgress: (@Sendable (Double) -> Void)? = nil) async throws {
         guard await ollama.isAvailable() else {
             throw OllamaError.unavailable
         }
 
         let present = try await ollama.modelIsAvailableLocally(id: model.id)
-        guard present else {
-            throw OllamaError.httpError(404)
+        if !present {
+            try await ollama.downloadModel(id: model.id) { progress in
+                onProgress?(progress)
+            }
         }
-        // Model is already resident in the Ollama store — no additional load step needed.
+        // Model is now resident in the Ollama store — no additional load step needed.
     }
 
     func unload() async {

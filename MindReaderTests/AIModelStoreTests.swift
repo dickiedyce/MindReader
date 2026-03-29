@@ -48,16 +48,33 @@ final class AIModelStoreTests: XCTestCase {
         XCTAssertEqual(ModelCatalog.all[1].id, "qwen2.5vl:3b")
         XCTAssertEqual(ModelCatalog.all[2].id, "gemma3:4b")
     }
+
+    func testLoadPassesProgressHandlerToServiceAndSetsDownloadingState() async {
+        let stub = StubAIModelService(shouldFail: false, progressToReport: 0.4)
+        let store = AIModelStore(service: stub)
+        var downloadingObserved = false
+        let cancellable = store.$lifecycleState.sink { state in
+            if case .downloading(let p) = state, p == 0.4 { downloadingObserved = true }
+        }
+        await store.load()
+        // Yield to allow any pending @MainActor tasks to flush
+        await Task.yield()
+        cancellable.cancel()
+        XCTAssertTrue(downloadingObserved, "Expected .downloading(0.4) to be observed during load")
+    }
 }
 
 private struct StubAIModelService: AIModelServing {
     let shouldFail: Bool
+    let progressToReport: Double?
 
-    init(shouldFail: Bool = false) {
+    init(shouldFail: Bool = false, progressToReport: Double? = nil) {
         self.shouldFail = shouldFail
+        self.progressToReport = progressToReport
     }
 
-    func load(model: CuratedModel) async throws {
+    func load(model: CuratedModel, onProgress: (@Sendable (Double) -> Void)?) async throws {
+        if let p = progressToReport { onProgress?(p) }
         if shouldFail { throw StubAIError.failed }
     }
 

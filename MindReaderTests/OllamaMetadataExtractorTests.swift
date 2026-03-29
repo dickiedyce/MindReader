@@ -99,4 +99,14 @@ private final class StubURLSession: URLSessionProtocol {
         let data = responseBody?.data(using: .utf8) ?? Data()
         return (data, response)
     }
+
+    func lines(for request: URLRequest) async throws -> AsyncThrowingStream<String, Error> {
+        if let error { return AsyncThrowingStream { $0.finish(throwing: error) } }
+        let body = responseBody ?? ""
+        let lineList = body.components(separatedBy: "\n").filter { !$0.isEmpty }
+        return AsyncThrowingStream { continuation in
+            for line in lineList { continuation.yield(line) }
+            continuation.finish()
+        }
+    }
 }

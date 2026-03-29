@@ -125,6 +125,51 @@ final class MenuBarViewModelTests: XCTestCase {
 
         XCTAssertTrue(viewModel2.canApplyRenames)
     }
+
+    func testAIExtractorUsedWhenModelIsReady() async {
+        let selected = [URL(fileURLWithPath: "/tmp/scan_1.pdf")]
+        let aiStore = AIModelStore(service: StubAIModelService(shouldFail: false))
+        await aiStore.load()
+        XCTAssertEqual(aiStore.lifecycleState, .ready)
+
+        let viewModel = MenuBarViewModel(
+            appSettingsStore: AppSettingsStore(defaults: UserDefaults(suiteName: #function)!, storageKey: #function),
+            selectionProvider: StubFinderSelectionProvider(result: .success(selected)),
+            ingestionPipeline: StubFileIngestionPipeline(),
+            renameProposer: StubRenameProposer(),
+            aiModelStore: aiStore,
+            aiMetadataExtractor: StubAIMetadataExtractor(entity: "AI Corp", description: "AI extracted doc")
+        )
+
+        viewModel.triggerPrimaryAction()
+        try? await Task.sleep(for: .milliseconds(50))
+
+        XCTAssertEqual(viewModel.lastProposals.count, 1)
+        // The proposedFilename should use AI-extracted entity/description
+        XCTAssertTrue(viewModel.lastProposals[0].proposedFilename.contains("AI Corp"))
+    }
+
+    func testHeuristicMetadataUsedWhenModelIsNotReady() async {
+        let selected = [URL(fileURLWithPath: "/tmp/scan_1.pdf")]
+        let aiStore = AIModelStore(service: StubAIModelService(shouldFail: true))
+        // Don't call load — lifecycleState stays .idle
+
+        let viewModel = MenuBarViewModel(
+            appSettingsStore: AppSettingsStore(defaults: UserDefaults(suiteName: #function)!, storageKey: #function),
+            selectionProvider: StubFinderSelectionProvider(result: .success(selected)),
+            ingestionPipeline: StubFileIngestionPipeline(),
+            renameProposer: StubRenameProposer(),
+            aiModelStore: aiStore,
+            aiMetadataExtractor: StubAIMetadataExtractor(entity: "AI Corp", description: "should not appear")
+        )
+
+        viewModel.triggerPrimaryAction()
+        try? await Task.sleep(for: .milliseconds(50))
+
+        XCTAssertEqual(viewModel.lastProposals.count, 1)
+        // Should use heuristic "Acme Co" from StubFileIngestionPipeline, not AI
+        XCTAssertTrue(viewModel.lastProposals[0].proposedFilename.contains("Acme Co"))
+    }
 }
 
 private enum StubError: Error {
@@ -160,7 +205,7 @@ private struct StubRenameProposer: RenameProposing {
     func proposeRename(for sourceURL: URL, metadata: RenameMetadata) -> RenameProposal {
         RenameProposal(
             originalURL: sourceURL,
-            proposedFilename: "2025-12-04 — Acme Co — \(metadata.description).pdf"
+            proposedFilename: "2025-12-04 — \(metadata.entity) — \(metadata.description).pdf"
         )
     }
 }
@@ -180,4 +225,22 @@ private struct StubRenameExecutionEngine: RenameExecuting {
     }
 
     func revert(records: [RenameRecord]) throws {}
+}
+
+private struct StubAIMetadataExtractor: AIMetadataExtracting {
+    let entity: String
+    let description: String
+
+    func extract(text: String, fileURL: URL) async throws -> RenameMetadata {
+        RenameMetadata(date: nil, datePrecision: .none, entity: entity, description: description)
+    }
+}
+
+private struct StubAIModelService: AIModelServing {
+    let shouldFail: Bool
+    init(shouldFail: Bool = false) { self.shouldFail = shouldFail }
+    func load(model: CuratedModel) async throws {
+        if shouldFail { throw StubError.failed }
+    }
+    func unload() async {}
 }

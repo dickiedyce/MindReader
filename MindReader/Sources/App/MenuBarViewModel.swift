@@ -15,6 +15,7 @@ final class MenuBarViewModel: ObservableObject {
     private let renameProposer: RenameProposing
     private let executionEngine: RenameExecuting
     private let aiModelStore: AIModelStore
+    private let aiMetadataExtractor: AIMetadataExtracting?
     private var currentTask: Task<Void, Never>?
 
     init(
@@ -23,7 +24,8 @@ final class MenuBarViewModel: ObservableObject {
         ingestionPipeline: FileIngesting = FileIngestionPipeline(),
         renameProposer: RenameProposing = RenameEngine(),
         executionEngine: RenameExecuting = RenameExecutionEngine(),
-        aiModelStore: AIModelStore? = nil
+        aiModelStore: AIModelStore? = nil,
+        aiMetadataExtractor: AIMetadataExtracting? = nil
     ) {
         self.appSettingsStore = appSettingsStore
         self.selectionProvider = selectionProvider
@@ -31,6 +33,7 @@ final class MenuBarViewModel: ObservableObject {
         self.renameProposer = renameProposer
         self.executionEngine = executionEngine
         self.aiModelStore = aiModelStore ?? AIModelStore()
+        self.aiMetadataExtractor = aiMetadataExtractor
     }
 
     var primaryActionTitle: String {
@@ -108,8 +111,7 @@ final class MenuBarViewModel: ObservableObject {
         isProcessing = false
     }
 
-    private func processFinderSelection() {
-        isProcessing = true
+    private func processFinderSelection() {        isProcessing = true
         statusText = "Processing selected files..."
         lastProposals = []
 
@@ -127,15 +129,27 @@ final class MenuBarViewModel: ObservableObject {
                     return
                 }
 
-                let proposals = selectedURLs.map { fileURL -> RenameProposal in
+                let aiReady = self.aiModelStore.lifecycleState == .ready
+                var proposals: [RenameProposal] = []
+                for fileURL in selectedURLs {
+                    if Task.isCancelled { return }
                     let ingested = try? self.ingestionPipeline.ingest(fileURL: fileURL)
-                    let metadata = ingested?.renameMetadata ?? RenameMetadata(
+                    let heuristicMetadata = ingested?.renameMetadata ?? RenameMetadata(
                         date: nil,
                         datePrecision: .none,
                         entity: "Unknown",
                         description: fileURL.deletingPathExtension().lastPathComponent
                     )
-                    return self.renameProposer.proposeRename(for: fileURL, metadata: metadata)
+                    let metadata: RenameMetadata
+                    if aiReady, let extractor = self.aiMetadataExtractor ?? self.makeDefaultAIExtractor() {
+                        metadata = (try? await extractor.extract(
+                            text: ingested?.extractedText ?? "",
+                            fileURL: fileURL
+                        )) ?? heuristicMetadata
+                    } else {
+                        metadata = heuristicMetadata
+                    }
+                    proposals.append(self.renameProposer.proposeRename(for: fileURL, metadata: metadata))
                 }
 
                 if Task.isCancelled { return }
@@ -150,5 +164,9 @@ final class MenuBarViewModel: ObservableObject {
                 self.currentTask = nil
             }
         }
+    }
+
+    private func makeDefaultAIExtractor() -> AIMetadataExtracting? {
+        OllamaMetadataExtractor(modelID: aiModelStore.selectedModel.id)
     }
 }

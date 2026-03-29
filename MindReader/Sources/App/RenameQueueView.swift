@@ -4,7 +4,6 @@ import UniformTypeIdentifiers
 struct RenameQueueView: View {
     @ObservedObject var viewModel: RenameQueueViewModel
     @State private var isDropTarget = false
-    @State private var hideDropArtwork = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -53,6 +52,10 @@ struct RenameQueueView: View {
         .frame(minWidth: 580, minHeight: 420)
     }
 
+    private var showDropArtwork: Bool {
+        viewModel.lines.isEmpty
+    }
+
     private var dropZone: some View {
         RoundedRectangle(cornerRadius: 14)
             .strokeBorder(isDropTarget ? Color.accentColor : Color.secondary.opacity(0.5), style: StrokeStyle(lineWidth: 2, dash: [6]))
@@ -63,14 +66,14 @@ struct RenameQueueView: View {
             .frame(height: 74)
             .overlay(
                 VStack(spacing: 4) {
-                    if !hideDropArtwork {
+                    if showDropArtwork {
                         Image(systemName: "tray.and.arrow.down")
                             .font(.title3)
                     }
                     Text("Drop files here to queue renames")
                         .font(.subheadline)
                         .fontWeight(.medium)
-                    if !hideDropArtwork {
+                    if showDropArtwork {
                         Text("Each file appears as a lozenge row with an editable name")
                             .font(.caption)
                             .foregroundStyle(.secondary)
@@ -78,14 +81,8 @@ struct RenameQueueView: View {
                 }
             )
             .onDrop(of: [UTType.fileURL.identifier], isTargeted: $isDropTarget) { providers in
-                hideDropArtwork = true
                 viewModel.handleDrop(providers: providers)
                 return true
-            }
-            .onChange(of: viewModel.lines.isEmpty) { isEmpty in
-                if isEmpty {
-                    hideDropArtwork = false
-                }
             }
     }
 

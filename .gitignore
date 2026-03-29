@@ -1,0 +1,19 @@
+# Private planning prompts
+/private/
+
+# Local signing config (keep secrets out of git)
+MindReader/Config/Signing.xcconfig
+
+# Xcode and Swift build artifacts
+DerivedData/
+build/
+*.xcworkspace/xcuserdata/
+*.xcuserdatad/
+*.xcuserstate
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# macOS
+.DS_Store

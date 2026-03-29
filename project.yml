@@ -1,0 +1,69 @@
+name: MindReader
+options:
+  minimumXcodeGenVersion: 2.38.0
+  createIntermediateGroups: true
+configs:
+  Debug: debug
+  Release: release
+configFiles:
+  Debug: MindReader/Config/Debug.xcconfig
+  Release: MindReader/Config/Release.xcconfig
+settings:
+  base:
+    SWIFT_VERSION: 5.10
+    MACOSX_DEPLOYMENT_TARGET: 13.0
+    GENERATE_INFOPLIST_FILE: YES
+    INFOPLIST_KEY_CFBundleDisplayName: MindReader
+    INFOPLIST_KEY_NSAppleEventsUsageDescription: MindReader needs Apple Events access to read Finder selection when enabled.
+    INFOPLIST_KEY_NSSystemAdministrationUsageDescription: MindReader may require system integration permissions for advanced file workflows.
+    MARKETING_VERSION: 0.1.0
+    CURRENT_PROJECT_VERSION: 1
+targets:
+  MindReader:
+    type: application
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: MindReader/Sources
+    resources:
+      - path: MindReader/Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dd.MindReader
+        PRODUCT_NAME: MindReader
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_ENTITLEMENTS: MindReader/Resources/MindReader.entitlements
+    postBuildScripts:
+      - name: Re-sign and Install
+        script: |
+          set -euo pipefail
+
+          APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
+          ENTITLEMENTS_PATH="${PROJECT_DIR}/MindReader/Resources/MindReader.entitlements"
+
+          if [[ "${CODE_SIGNING_ALLOWED:-NO}" != "YES" ]]; then
+            echo "Code signing disabled for this configuration; skipping install step."
+            exit 0
+          fi
+
+          if [[ -z "${EXPANDED_CODE_SIGN_IDENTITY:-}" ]]; then
+            echo "No signing identity available; skipping re-sign/install."
+            exit 0
+          fi
+
+          if [[ -f "${ENTITLEMENTS_PATH}" ]]; then
+            /usr/bin/codesign --force --options runtime --entitlements "${ENTITLEMENTS_PATH}" --sign "${EXPANDED_CODE_SIGN_IDENTITY}" "${APP_PATH}"
+          else
+            /usr/bin/codesign --force --options runtime --sign "${EXPANDED_CODE_SIGN_IDENTITY}" "${APP_PATH}"
+          fi
+
+          /usr/bin/codesign --verify --deep --strict --verbose=2 "${APP_PATH}"
+          /usr/bin/ditto "${APP_PATH}" "/Applications/${WRAPPER_NAME}"
+  MindReaderTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: MindReaderTests
+    dependencies:
+      - target: MindReader

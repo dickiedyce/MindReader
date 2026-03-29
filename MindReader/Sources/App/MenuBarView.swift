@@ -59,6 +59,10 @@ struct MenuBarView: View {
 
             Divider()
 
+            Button("Open Rename Window...") {
+                viewModel.openRenameQueueWindow()
+            }
+
             Button("Preferences...") {
                 viewModel.openPreferences()
             }

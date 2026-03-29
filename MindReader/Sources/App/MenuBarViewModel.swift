@@ -78,6 +78,10 @@ final class MenuBarViewModel: ObservableObject {
         PreferencesWindowController.shared.show(appSettingsStore: appSettingsStore, aiModelStore: aiModelStore)
     }
 
+    func openRenameQueueWindow() {
+        RenameQueueWindowController.shared.show(aiModelStore: aiModelStore)
+    }
+
     func preloadAIModel() async {
         await aiModelStore.detectAndPreload()
     }

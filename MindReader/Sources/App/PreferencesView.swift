@@ -26,6 +26,7 @@ struct PreferencesView: View {
 
     @ObservedObject var appSettingsStore: AppSettingsStore
     @ObservedObject var aiModelStore: AIModelStore
+    @StateObject private var finderPermission = FinderAutomationPermission()
     @State private var selectedTab: Tab = .general
 
     var body: some View {
@@ -209,14 +210,14 @@ struct PreferencesView: View {
         VStack(alignment: .leading, spacing: 14) {
             permissionRow(
                 title: "Finder Automation",
-                status: "Not Requested",
-                requestAction: "Request Access"
+                status: finderPermissionStatusLabel,
+                canRequest: finderPermission.status == .notDetermined || finderPermission.status == .unknown
             ) {
-                // Request flow will be wired with actual Finder automation feature.
+                finderPermission.request()
             }
 
-            Button("Open Privacy Settings") {
-                guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy") else {
+            Button("Open Privacy & Security Settings") {
+                guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation") else {
                     return
                 }
                 NSWorkspace.shared.open(url)
@@ -228,9 +229,19 @@ struct PreferencesView: View {
 
             Spacer()
         }
+        .onAppear { finderPermission.refresh() }
     }
 
-    private func permissionRow(title: String, status: String, requestAction: String, action: @escaping () -> Void) -> some View {
+    private var finderPermissionStatusLabel: String {
+        switch finderPermission.status {
+        case .unknown:       return "Checking..."
+        case .notDetermined: return "Not Requested"
+        case .granted:       return "Access Granted"
+        case .denied:        return "Access Denied"
+        }
+    }
+
+    private func permissionRow(title: String, status: String, canRequest: Bool, action: @escaping () -> Void) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
@@ -239,7 +250,9 @@ struct PreferencesView: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            Button(requestAction, action: action)
+            if canRequest {
+                Button("Request Access", action: action)
+            }
         }
     }
 }

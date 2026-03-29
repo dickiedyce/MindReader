@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0248F4E019F77191DBA05017 /* FileIngestionPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FEE62D9EE7B769E2DBA8AF /* FileIngestionPipeline.swift */; };
 		0263F0EDABD0EDA00D3BC979 /* AppSettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D5529D6AE88F2FBE8DA8F5 /* AppSettingsStoreTests.swift */; };
+		061E7CE27DD31E7D0E35ADC9 /* FinderAutomationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EC779CBFBC62989B85F916 /* FinderAutomationPermission.swift */; };
 		132B08F9F9895FBEDA850882 /* AIModelStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A84A69571E17E4F26BABF /* AIModelStoreTests.swift */; };
 		1C5589255EE38B6BD63A1D8B /* FilenameFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B38B038D139890FD82A7513 /* FilenameFormatterTests.swift */; };
 		24F661108C9A9F154959C190 /* FileIngestionPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487619809B46FE89DD03CF70 /* FileIngestionPipelineTests.swift */; };
@@ -56,6 +57,7 @@
 		3B38B038D139890FD82A7513 /* FilenameFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilenameFormatterTests.swift; sourceTree = "<group>"; };
 		41E5806E24A2B7649A20AFB4 /* MenuBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarViewModelTests.swift; sourceTree = "<group>"; };
 		487619809B46FE89DD03CF70 /* FileIngestionPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIngestionPipelineTests.swift; sourceTree = "<group>"; };
+		49EC779CBFBC62989B85F916 /* FinderAutomationPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderAutomationPermission.swift; sourceTree = "<group>"; };
 		57D07F207368A9BF7AA7C2A4 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		743AB75B1F17EB7826F44DAC /* RenameExecutionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameExecutionEngine.swift; sourceTree = "<group>"; };
 		817580FE2093FB5406C67323 /* MindReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +111,7 @@
 			children = (
 				93FEE62D9EE7B769E2DBA8AF /* FileIngestionPipeline.swift */,
 				D58D22EB893789178F505A29 /* FilenameFormatter.swift */,
+				49EC779CBFBC62989B85F916 /* FinderAutomationPermission.swift */,
 				B9D919B5CD94D70D698572C5 /* FinderSelectionProvider.swift */,
 				133C868DB3C5CB1E4E51061D /* RenameEngine.swift */,
 				743AB75B1F17EB7826F44DAC /* RenameExecutionEngine.swift */,
@@ -310,6 +313,7 @@
 				8D5288EA6DD1783D941E606F /* AppSettings.swift in Sources */,
 				0248F4E019F77191DBA05017 /* FileIngestionPipeline.swift in Sources */,
 				58BE178AAD2C34E801E744DC /* FilenameFormatter.swift in Sources */,
+				061E7CE27DD31E7D0E35ADC9 /* FinderAutomationPermission.swift in Sources */,
 				95789E31DE63FD598AA8C6C7 /* FinderSelectionProvider.swift in Sources */,
 				51A53C12735D391AF2B27081 /* MenuBarView.swift in Sources */,
 				9671FA6ED8BB8B35CE0BD286 /* MenuBarViewModel.swift in Sources */,

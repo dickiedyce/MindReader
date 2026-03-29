@@ -14,7 +14,7 @@ struct MindReaderApp: App {
     var body: some Scene {
         MenuBarExtra(
             "MindReader",
-            systemImage: viewModel.isProcessing ? "waveform.circle.fill" : "waveform.circle"
+            systemImage: "document.badge.gearshape"
         ) {
             MenuBarView(viewModel: viewModel)
                 .task { await viewModel.preloadAIModel() }

@@ -24,6 +24,27 @@ struct MenuBarView: View {
             }
             .disabled(!viewModel.canStopProcessing)
 
+            if !viewModel.lastProposals.isEmpty {
+                Divider()
+                ForEach(viewModel.lastProposals, id: \.originalURL) { proposal in
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(proposal.originalURL.lastPathComponent)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                        HStack(spacing: 3) {
+                            Image(systemName: "arrow.right")
+                                .font(.caption2)
+                                .foregroundStyle(.tertiary)
+                            Text(proposal.proposedFilename)
+                                .font(.caption2)
+                                .lineLimit(2)
+                        }
+                    }
+                    .padding(.vertical, 1)
+                }
+            }
+
             if viewModel.canApplyRenames {
                 Button("Apply \(viewModel.lastProposals.count) Rename(s)") {
                     Task { await viewModel.applyRenames() }

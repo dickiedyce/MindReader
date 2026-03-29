@@ -1,4 +1,5 @@
 import Foundation
+import PDFKit
 
 protocol DocumentTextExtracting {
     func extractText(from fileURL: URL) throws -> String?
@@ -24,11 +25,13 @@ struct IngestedFile {
 
 struct PlainTextDocumentExtractor: DocumentTextExtracting {
     func extractText(from fileURL: URL) throws -> String? {
-        let textExtensions: Set<String> = ["txt", "md", "rtf", "csv", "json", "xml", "yaml", "yml"]
         let ext = fileURL.pathExtension.lowercased()
-        guard textExtensions.contains(ext) else {
-            return nil
+        if ext == "pdf" {
+            guard let doc = PDFDocument(url: fileURL) else { return nil }
+            return doc.string
         }
+        let textExtensions: Set<String> = ["txt", "md", "rtf", "csv", "json", "xml", "yaml", "yml"]
+        guard textExtensions.contains(ext) else { return nil }
         return try String(contentsOf: fileURL)
     }
 }

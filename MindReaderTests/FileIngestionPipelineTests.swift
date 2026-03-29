@@ -1,4 +1,6 @@
 import XCTest
+import CoreGraphics
+import CoreText
 @testable import MindReader
 
 final class FileIngestionPipelineTests: XCTestCase {
@@ -48,6 +50,24 @@ final class FileIngestionPipelineTests: XCTestCase {
         XCTAssertEqual(ingested.renameMetadata.description, "IMG_2847")
         XCTAssertEqual(ingested.renameMetadata.datePrecision, .none)
     }
+
+    func testPlainTextDocumentExtractorExtractsPDFText() throws {
+        let url = makeTempPDF(text: "Acme Corporation\nInvoice 2025-12-14")
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let extractor = PlainTextDocumentExtractor()
+        let result = try extractor.extractText(from: url)
+
+        let text = try XCTUnwrap(result, "Expected text from PDF, got nil")
+        XCTAssertTrue(text.contains("Acme"), "Expected 'Acme' in extracted text, got: \(text)")
+    }
+
+    func testPlainTextDocumentExtractorReturnsNilForUnsupportedType() throws {
+        let url = URL(fileURLWithPath: "/tmp/photo.heic")
+        let extractor = PlainTextDocumentExtractor()
+        let result = try extractor.extractText(from: url)
+        XCTAssertNil(result)
+    }
 }
 
 private struct StubDocumentExtractor: DocumentTextExtracting {
@@ -72,4 +92,24 @@ private struct StubMetadataProvider: FileMetadataProviding {
     func createdDate(for fileURL: URL) -> Date? {
         createdDate
     }
+}
+
+// MARK: - Helpers
+
+/// Creates a temporary PDF file with a real searchable text layer via Core Text.
+private func makeTempPDF(text: String) -> URL {
+    let url = FileManager.default.temporaryDirectory
+        .appendingPathComponent(UUID().uuidString + ".pdf")
+    var bounds = CGRect(x: 0, y: 0, width: 612, height: 792)
+    guard let ctx = CGContext(url as CFURL, mediaBox: &bounds, nil) else { return url }
+    ctx.beginPDFPage(nil)
+    let font = CTFontCreateWithName("Helvetica" as CFString, 14, nil)
+    let attrs: [NSAttributedString.Key: Any] = [.font: font]
+    let attrStr = CFAttributedStringCreate(kCFAllocatorDefault, text as CFString, attrs as CFDictionary)!
+    let line = CTLineCreateWithAttributedString(attrStr)
+    ctx.textPosition = CGPoint(x: 50, y: 600)
+    CTLineDraw(line, ctx)
+    ctx.endPDFPage()
+    ctx.closePDF()
+    return url
 }

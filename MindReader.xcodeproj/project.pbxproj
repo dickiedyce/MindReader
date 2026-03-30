@@ -25,6 +25,7 @@
 		8A1E0A5CDAE86B04959925AF /* MenuBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E5806E24A2B7649A20AFB4 /* MenuBarViewModelTests.swift */; };
 		8B62366998367C2CC9BD5867 /* OllamaMetadataExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD288C5DE9483879F196C828 /* OllamaMetadataExtractor.swift */; };
 		8D5288EA6DD1783D941E606F /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5954DE1C019BFA270E9E67 /* AppSettings.swift */; };
+		9056BAC6281D53C30FC03E65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B987685C642C0DB2EAFFD26 /* Assets.xcassets */; };
 		95789E31DE63FD598AA8C6C7 /* FinderSelectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D919B5CD94D70D698572C5 /* FinderSelectionProvider.swift */; };
 		9671FA6ED8BB8B35CE0BD286 /* MenuBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBC4C2E29856D2197AB584D /* MenuBarViewModel.swift */; };
 		9C32E8F80AEFA926EEACBB21 /* ShortcutNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6AA91373167455C3336D4E /* ShortcutNames.swift */; };
@@ -65,6 +66,7 @@
 		487619809B46FE89DD03CF70 /* FileIngestionPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIngestionPipelineTests.swift; sourceTree = "<group>"; };
 		49EC779CBFBC62989B85F916 /* FinderAutomationPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderAutomationPermission.swift; sourceTree = "<group>"; };
 		57D07F207368A9BF7AA7C2A4 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		5B987685C642C0DB2EAFFD26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		743AB75B1F17EB7826F44DAC /* RenameExecutionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameExecutionEngine.swift; sourceTree = "<group>"; };
 		817580FE2093FB5406C67323 /* MindReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8431A8DDAEDD683E83177151 /* RenameExecutionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameExecutionEngineTests.swift; sourceTree = "<group>"; };
@@ -98,6 +100,14 @@
 				0A6AA91373167455C3336D4E /* ShortcutNames.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4C51359FD6DE99836F8F5E88 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5B987685C642C0DB2EAFFD26 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		6C7CFCE0BEB41DBE0B715244 /* MindReaderTests */ = {
@@ -136,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				D77E589796C627ECE8190BAA /* Config */,
+				4C51359FD6DE99836F8F5E88 /* Resources */,
 				C723C3B86E21C8946DCCA815 /* Sources */,
 			);
 			path = MindReader;
@@ -213,6 +224,7 @@
 			buildConfigurationList = 88FCF4C66029A3D256A7C796 /* Build configuration list for PBXNativeTarget "MindReader" */;
 			buildPhases = (
 				89D75F5EF107E85648FBBECD /* Sources */,
+				A7D17FECE1E363A23A6556CA /* Resources */,
 				864DC2FAFAB9D4DFC2955E8D /* Re-sign and Install */,
 			);
 			buildRules = (
@@ -254,11 +266,7 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					49CD2EB91A485261BC7FE678 = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
-					};
-					9763909364121B6EEB6A628D = {
-						DevelopmentTeam = "";
 					};
 				};
 			};
@@ -281,6 +289,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A7D17FECE1E363A23A6556CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9056BAC6281D53C30FC03E65 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		864DC2FAFAB9D4DFC2955E8D /* Re-sign and Install */ = {

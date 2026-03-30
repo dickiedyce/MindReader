@@ -1,0 +1,41 @@
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-8ywhsh2ii1-1">
+            <stop stop-color="#0F3D56" offset="0%"></stop>
+            <stop stop-color="#165C7D" offset="55%"></stop>
+            <stop stop-color="#0A7EA4" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="linearGradient-8ywhsh2ii1-2">
+            <stop stop-color="#F8FAFC" offset="0%"></stop>
+            <stop stop-color="#D9E7F0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-8ywhsh2ii1-3">
+            <stop stop-color="#FB2424" offset="0%"></stop>
+            <stop stop-color="#F95D16" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="backdrop" fill="url(#linearGradient-8ywhsh2ii1-1)" x="0" y="0" width="1024" height="1024" rx="224"></rect>
+            <g id="document" transform="translate(172, 84)">
+                <path d="M102.656126,0 L439.272727,0 L604,164.716463 L604,680.35061 C604,737.643293 558.640316,783 501.343874,783 L102.656126,783 C45.3596838,783 0,737.643293 0,680.35061 L0,102.64939 C0,45.3567073 45.3596838,0 102.656126,0 Z" id="Path" fill="url(#linearGradient-8ywhsh2ii1-2)"></path>
+                <path d="M439.272727,0 L439.272727,95.9808126 C439.272727,133.306684 479.857708,163.522866 529.992095,163.522866 L604,163.522866 L439.272727,0 Z" id="Path" fill="#C9D9E4"></path>
+                <rect id="Rectangle" fill="#86A7BA" x="105.043478" y="259.265244" width="257.833992" height="42.9695122" rx="18"></rect>
+                <rect id="Rectangle" fill="#A6BECD" x="105.043478" y="340.429878" width="195.762846" height="35.8079268" rx="15"></rect>
+                <rect id="Rectangle" fill="#A6BECD" x="105.043478" y="414.432927" width="214.86166" height="35.8079268" rx="15"></rect>
+                <rect id="Rectangle" fill="#A6BECD" x="105.043478" y="488.435976" width="164.727273" height="35.8079268" rx="15"></rect>
+            </g>
+            <g id="eyeball" transform="translate(505, 512)">
+                <path d="M441,220.5 C441,342.196721 342.084112,441 220.5,441 C98.9158879,441 0,342.196721 0,220.5 C0,98.8032787 98.9158879,0 220.5,0 C342.084112,0 441,98.8032787 441,220.5 Z" id="Path" fill="#FFFFFF"></path>
+                <path d="M369.035047,219.885246 C369.035047,302.685246 301.688108,369.885246 219.035047,369.885246 C136.381986,369.885246 69.0350467,302.685246 69.0350467,219.885246 C69.0350467,137.085246 136.381986,69.8852459 219.035047,69.8852459 C301.688108,69.8852459 369.035047,137.085246 369.035047,219.885246 Z" id="Path" fill="#0E4A67"></path>
+                <circle id="Oval" fill="url(#linearGradient-8ywhsh2ii1-3)" cx="221.191589" cy="220.92623" r="90"></circle>
+                <circle id="Oval" fill="#FFF7ED" cx="221.649533" cy="216.762295" r="30"></circle>
+                <ellipse id="Oval" fill-opacity="0.72" fill="#FFFFFF" transform="translate(263.0005, 166.1393) rotate(39) translate(-263.0005, -166.1393)" cx="263.000522" cy="166.139344" rx="13.5" ry="9.5"></ellipse>
+            </g>
+            <g id="stars" transform="translate(5, 173)" fill="#FFFFFF" fill-opacity="0.18">
+                <polygon id="Path" points="913 279 941 295 913 311 897 339 881 311 853 295 881 279 897 251"></polygon>
+                <polygon id="Path" points="127 35 145 45 127 55 117 73 107 55 89 45 107 35 117 17"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

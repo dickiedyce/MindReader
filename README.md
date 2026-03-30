@@ -51,6 +51,17 @@ brew install xcodegen
 xcodegen generate
 ```
 
+### Regenerate the App Icon
+
+The canonical icon source is the SVG at `MindReader/Resources/IconSource/AppIcon.svg`.
+Generate the PNG asset catalog entries with:
+
+```bash
+./scripts/generate_app_icon.sh
+```
+
+The script renders the SVG with macOS Quick Look, writes the full macOS app icon size set into `MindReader/Resources/Assets.xcassets/AppIcon.appiconset`, and refreshes `Contents.json` to match.
+
 ### Build a Debug App
 
 ```bash
